@@ -1,18 +1,29 @@
 (function() {
-    'use strict';
+    "use strict";
 
-    angular.module('LunchChecker', [])
-        .controller('LunchCheckController', LunchCheckController);
+    angular
+        .module("LunchCheck", [])
+        .controller("LunchCheckController", LunchCheckController);
+    LunchCheckController.$inject = ["$scope"];
 
-    LunchCheckController.$inject = ['$scope', '$inject'];
+    function LunchCheckController($scope) {
+        $scope.input = "";
+        $scope.splitInput = "";
+        $scope.responseText = "";
 
-    function LunchCheckController($scope, $inject) {
-        $scope.name = "Yaakov";
+        $scope.check = function() {
+            $scope.splitInput = $scope.input.split(",");
 
-        $scope.upper = function() {
-            var upCase = $inject('uppercase');
-            $scope.name = upCase($scope.name);
+            if ($scope.input === "") {
+                $scope.responseText = "Please enter data first";
+                return $scope.responseText;
+            } else if ($scope.splitInput.length <= 3) {
+                $scope.responseText = "Enjoy!";
+                return $scope.responseText;
+            } else {
+                $scope.responseText = "Too much!";
+                return $scope.responseText;
+            }
         };
     }
-
 })();
